@@ -1,0 +1,44 @@
+.magicBorder {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 7fr 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+    z-index: -1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.border1 {
+    grid-column-start: 3;
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+
+.border2 {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.border3 {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+
+.border4 {
+    grid-row-start: 3;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.innerBorderHorizontal {
+    width: 100%;
+    height: 1/7;
+}
+
+.innerBorderVertical {
+    width: 1/7;
+    height: 100%;
+}

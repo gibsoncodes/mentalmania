@@ -17,8 +17,9 @@ function toFraction(x, tolerance) {
     return {numerator: num, denominator: den};
 }
 
-class Game {
+class NewGame {
     constructor() {
+        console.log("momom")
         this.score = {
             right: 0,
             wrong: 0,
@@ -54,8 +55,7 @@ class Game {
 
     generateProblem() {
         let rand = Math.floor(Math.random() * this.gameCategories.length);
-        let problem = this.gameCategories[rand].serveProblem();
-        this.currentProblem = problem;
+        this.currentProblem = this.gameCategories[rand].serveProblem();
     }
 
     serveProblem() {
@@ -64,9 +64,36 @@ class Game {
     }
 
     handleUserInput(input) {
-        this.gameProblemSet.push(this.currentProblem);
-        //
+        let newProblem = {
+            equation: this.currentProblem.equation, 
+            answer: this.currentProblem.answer
+        };
 
+        if (input == this.currentProblem.answer) {
+            this.gameProblemSet.push(
+                {
+                    problem: newProblem,
+                    solved: true,
+                    userAnswer: input,
+                }
+            );
+            return true;
+        } else {
+            this.gameProblemSet.push(
+                {
+                    problem: newProblem,
+                    solved: false,
+                    userAnswer: input,
+                }
+            );
+            return false;
+        }
+
+    }
+
+    getPlaySet() {
+        console.log(this.gameProblemSet)
+        return this.gameProblemSet;
     }
 }
 
@@ -327,12 +354,14 @@ class Algebra {
     }
 
     serveProblem() {
-        this.generateProblem(2)
+        this.generateProblem()
         return this.problem;
     }
 }
 
-let test = new Algebra(0);
-test.generateProblem()
-console.log(test.problemSet)
+// let test = new Algebra(0);
+// test.generateProblem()
+// console.log(test.problemSet)
 // console.log(toFraction((1/13)));
+
+export default NewGame;
