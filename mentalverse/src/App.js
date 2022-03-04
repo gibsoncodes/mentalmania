@@ -6,16 +6,17 @@ import Categories from './Categories';
 import MagicBorder from './MagicBorder';
 
 
-const whiteArray = new Array(7).fill("FFFFFF");
-const initialBorderState = {
-        1: [...whiteArray],
-        2: [...whiteArray],
-        3: [...whiteArray],
-        4: [...whiteArray],
-}
+
 
 function App() {
-
+    let whiteArray = new Array(7).fill("FFFFFF");
+    const initialBorderState = {
+            1: [...whiteArray],
+            2: [...whiteArray],
+            3: [...whiteArray],
+            4: [...whiteArray],
+    }
+    console.log(initialBorderState)
     const [game, setGame] = useState(() => new NewGame());
     const [gameState, setGameState] = useState({playState: "offline"})
     const [score, setScore] = useState(game.score);
@@ -28,13 +29,20 @@ function App() {
     function addBorderElem() {
         const randomColor = Math.floor(Math.random()*16777215).toString(16);
         let newBorderState = borderState;
-        newBorderState[curr.side][curr.depth] = randomColor;
+        if (curr.side === 1 || curr.side === 4) {
+            console.log(curr)
+            newBorderState[curr.side][6 - curr.depth] = randomColor;
+        } else {
+            newBorderState[curr.side][curr.depth] = randomColor;
+        }
         setBorderState(newBorderState)
         let newCurr = curr;
-
         if (newCurr.side === 4) {
             newCurr.side = 1;
             newCurr.depth += 1;
+            if (newCurr.depth > 6) {
+                newCurr.depth = 0;
+            }  
         } else {
             newCurr.side += 1;
         }
@@ -83,6 +91,7 @@ function App() {
         } else {
             newScore.wrong += 1;
             setBorderState(initialBorderState);
+            setCurr({...curr, side: 1, depth: 0})
         }
         setScore(newScore);
     }
@@ -91,8 +100,7 @@ function App() {
 
     return (
       <div className="App">
-        <Game gameProps={gameProps} />
-        <MagicBorder borderState={borderState} score={score}/>
+        <MagicBorder borderState={borderState} score={score} gameProps={gameProps}/>
       </div>
     );
 }
