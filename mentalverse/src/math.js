@@ -32,19 +32,19 @@ class NewGame {
     addCategories(categories) {
         categories.forEach(category => {
             switch (category) {
-                case "addition":
+                case "ADDITION":
                     this.gameCategories.push(new AdditionAndSubtraction(category.difficulty, 'addition'));
                     break;
-                case "subtraction":
+                case "SUBTRACTION":
                     this.gameCategories.push(new AdditionAndSubtraction(category.difficulty, 'subtraction'));
                     break;
-                case "multiplication":
+                case "MULTIPLICATION":
                     this.gameCategories.push(new Multiplication(category.difficulty));
                     break;
-                case "division":
+                case "DIVISION":
                     this.gameCategories.push(new Division(category.difficulty));
                     break;
-                case "algebra":
+                case "ALGEBRA":
                     this.gameCategories.push(new Algebra(category.difficulty));
                     break;
                 default:

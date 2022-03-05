@@ -3,6 +3,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    font-family: 'Source Code Pro', monospace;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,4 +12,237 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+.magicBorder {
+    position: absolute;
+    display: grid;
+    grid-template-columns: 1fr 7fr 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+    z-index: -1;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.mid {
+    grid-row-start: 2;
+    grid-column-start: 2;
+    border: solid black 8px;
+}
+
+.title {
+    display: inline;
+    float: left;
+    padding-left: 1px;
+    font-size: 27px;
+    font-weight: 900;
+}
+
+.titleDiv {
+    position: relative;
+    grid-row-start: 2;
+    grid-column-start: 2;
+    left: 0;
+    top: 0;
+    padding-left: 25px;
+    width: 100%;
+    height: 80px;
+}
+
+.border1 {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-start: 3;
+    grid-row-start: 2;
+}
+
+.border2 {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-row-start: 1;
+    grid-column-start: 2;
+}
+
+.border3 {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.border4 {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-row-start: 3;
+    grid-column-start: 2;
+}
+
+.brlTri {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-row: 3;
+    grid-column: 3;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+    background-color: rgba(0, 0, 0, 0);
+}
+.brrTri {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row: 3;
+    grid-column: 3;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+
+}
+.trlTri {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-row: 1;
+    grid-column: 3;
+    clip-path: polygon(0% 100%, 0% 0%, 100% 0%);
+
+}
+.trrTri {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row: 1;
+    grid-column: 3;
+    clip-path: polygon(0% 100%, 100% 100%, 100% 0%);
+
+}
+.tllTri {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row: 1;
+    grid-column: 1;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+
+}
+.tlrTri {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-row: 1;
+    grid-column: 1;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+
+}
+.bllTri {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-row: 3;
+    grid-column: 1;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
+
+}
+.blrTri {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-row: 3;
+    grid-column: 1;
+    clip-path: polygon(0% 100%, 100% 0%, 100% 100%);
+}
+
+.innerBorderHorizontal {
+    width: 100%;
+    height: 100%;
+}
+
+.innerBorderVertical {
+    width: 100%;
+    height: 100%;
+}
+
+.categoryText {
+    margin-bottom: 60px;
+}
+
+.categoryBtn {
+    background-color: white;
+    padding: 30px 13px;
+    width: 180px;
+    font-size: 17px;
+    border: solid black 2px;
+    margin: 0 5px;
+    font-weight: 600;
+}
+
+.categoryDiv {
+    margin-top: 30px;
+}
+
+.startBtn {
+    position: relative;
+    padding: 18px 30px;
+    margin-top: 50px;
+    font-size: 30px;
+    background-color: white;
+    border: solid black 2px;
+}
+
+.startBtn::before {
+    content: "";
+    position: absolute;
+    border: solid black 1px;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+}
+
+.btnText {
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+    padding-bottom: 2px;
+    border-bottom: solid white 2px;
+}
+
+button {
+    font-family: 'Source Code Pro', monospace;
+
+}
+
+button:hover {
+    background-color: whitesmoke;
+}
+
+.mainPlay {
+    margin-top: 50px;
+}
+
+.inputDiv {
+    position: relative;
+    top: 70%;
+}
+
+.inputBar {
+    position: absolute;
+    left: 50%;
+    border: none;
+    border-bottom: solid black 6px;
+    width: 50%;
+    height: 80px;
+    transform: translate(-50%, 0);
+}
+
+.inputText {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 0px;
+    font-size: 70px;
+    font-family: 'Dosis', sans-serif;
+}
+
+.invisibleInput {
+    width: 0px;
+    height: 0px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: transparent;
+}
+
+.equation {
+    font-size: 50px;
 }

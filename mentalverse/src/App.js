@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import NewGame from './math'
-import Game from './Game';
-import Categories from './Categories';
 import MagicBorder from './MagicBorder';
 
 
@@ -23,8 +21,8 @@ function App() {
     const [problem, setProblem] = useState(game.currentProblem);
     const [timerState, setTimerState] = useState({timeValue: 5, timerAction: "offline"});
     const [results, setResults] = useState(null);
-    const [borderState, setBorderState] = useState(initialBorderState)
-    const [curr, setCurr] = useState({side: 1, depth: 0})
+    const [borderState, setBorderState] = useState(initialBorderState);
+    const [curr, setCurr] = useState({side: 1, depth: 0});
 
     function addBorderElem() {
         const randomColor = Math.floor(Math.random()*16777215).toString(16);
@@ -96,7 +94,7 @@ function App() {
         setScore(newScore);
     }
 
-    const gameProps = {displayNewProblem: displayNewProblem, validateAnswer: validateAnswer, game: game, problem: problem, startGame: startGame, timerState: timerState, setTimerState: setTimerState, results: results, score: score, toggleGame: toggleGame, endGame: endGame}
+    const gameProps = {displayNewProblem: displayNewProblem, validateAnswer: validateAnswer, gameState: gameState, game: game, problem: problem, startGame: startGame, timerState: timerState, setTimerState: setTimerState, results: results, score: score, toggleGame: toggleGame, endGame: endGame}
 
     return (
       <div className="App">

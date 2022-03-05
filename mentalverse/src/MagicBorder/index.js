@@ -1,6 +1,6 @@
 import React from 'react'
-import "./index.css"
-import Game from '../Game'
+import Game from '../Game/Game'
+import Input from '../Game/Input'
 
 
 const AsComponent = ({divName, data}) => {
@@ -35,7 +35,7 @@ const triDivs = [
     ["tllTri", "bllTri"],
     ["blrTri", "brlTri"],
 ]
-const MagicBorder = ({borderState, gameProps}) => {
+const MagicBorder = ({borderState, gameProps, inputProps}) => {
     const data = [];
     for (let i = 0; i < 4; i++) {
         let borderStyle = (i + 1) % 2 !== 0 ? "innerBorderVertical" : "innerBorderHorizontal";
@@ -61,12 +61,15 @@ const MagicBorder = ({borderState, gameProps}) => {
         data.push(outer);  
     }
 
+    let display = gameProps.gameState.playState;
+
     return (
         <div className="magicBorder">  
             {data}
             <div className="mid">
                 <TitleDiv />          
-                <Game gameProps={gameProps} />
+                {display === "offline" ? <Game gameProps={gameProps} /> : null }
+                {display === "default" ? <Input gameProps={gameProps} /> : null }
             </div>
         </div>
     )
