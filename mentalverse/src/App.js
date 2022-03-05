@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import NewGame from './math'
 import MagicBorder from './MagicBorder';
+import Timer from './Timer';
 
 
 
@@ -14,7 +15,6 @@ function App() {
             3: [...whiteArray],
             4: [...whiteArray],
     }
-    console.log(initialBorderState)
     const [game, setGame] = useState(() => new NewGame());
     const [gameState, setGameState] = useState({playState: "offline"})
     const [score, setScore] = useState(game.score);
@@ -24,11 +24,11 @@ function App() {
     const [borderState, setBorderState] = useState(initialBorderState);
     const [curr, setCurr] = useState({side: 1, depth: 0});
 
+
     function addBorderElem() {
         const randomColor = Math.floor(Math.random()*16777215).toString(16);
         let newBorderState = borderState;
         if (curr.side === 1 || curr.side === 4) {
-            console.log(curr)
             newBorderState[curr.side][6 - curr.depth] = randomColor;
         } else {
             newBorderState[curr.side][curr.depth] = randomColor;
@@ -52,7 +52,7 @@ function App() {
         game.serveProblem();
         setProblem(game.currentProblem);
         setGameState({...gameState, playState: "default"})
-        setTimerState({...timerState, timerAction: "restart"})
+        setTimerState({...timerState, timerAction: "default"})
     }
 
     const toggleGame = (e) => {

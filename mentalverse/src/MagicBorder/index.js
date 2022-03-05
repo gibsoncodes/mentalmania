@@ -35,7 +35,7 @@ const triDivs = [
     ["tllTri", "bllTri"],
     ["blrTri", "brlTri"],
 ]
-const MagicBorder = ({borderState, gameProps, inputProps}) => {
+const MagicBorder = ({borderState, gameProps}) => {
     const data = [];
     for (let i = 0; i < 4; i++) {
         let borderStyle = (i + 1) % 2 !== 0 ? "innerBorderVertical" : "innerBorderHorizontal";
@@ -63,11 +63,12 @@ const MagicBorder = ({borderState, gameProps, inputProps}) => {
 
     let display = gameProps.gameState.playState;
 
+
     return (
         <div className="magicBorder">  
             {data}
             <div className="mid">
-                <TitleDiv />          
+                <TitleDiv />    
                 {display === "offline" ? <Game gameProps={gameProps} /> : null }
                 {display === "default" ? <Input gameProps={gameProps} /> : null }
             </div>

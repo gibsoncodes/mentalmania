@@ -6,7 +6,6 @@ const Game = ({gameProps}) => {
 
     return (
         <div className="game">
-            <h2>{gameProps.problem.equation}</h2>
             <Categories startGame={_.startGame} handleSubmit={_.handleSubmit} timerState={_.timerState} setTimerState={_.setTimerState}/>
 
         <ul>

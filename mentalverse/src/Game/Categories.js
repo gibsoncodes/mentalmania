@@ -34,9 +34,6 @@ const Categories = ({startGame, handleSubmit, timerState, setTimerState}) => {
             </div>
 
             <button className="startBtn" onClick={submitCategories}>START</button>
-
-            {/* <Timer initialSeconds={5} handleSubmit={handleSubmit} timerState={timerState} setTimerState={setTimerState}/> */}
-
         </div>
     )
 }

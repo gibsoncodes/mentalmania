@@ -1,10 +1,10 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef} from 'react';
+import Timer from '../Timer';
 
 const Input = ({gameProps}) => {
     let _ = gameProps;
     const [inputState, setInputState] = useState({value: ""});
     const inputRef = useRef(null);
-    console.log(inputState)
 
     const handleChange = (e) => {
         e.preventDefault()
@@ -13,13 +13,15 @@ const Input = ({gameProps}) => {
 
     function handleSubmit(e) {
         if (e) e.preventDefault();  
-        _.setTimerState({..._.timerState, timerAction: "paused"})
+        console.log("hit")
+        _.setTimerState({..._.timerState, timerAction: "restart"})
         _.validateAnswer(inputState.value);
-        _.displayNewProblem();
         setInputState({value: ""}); 
+        _.displayNewProblem();
     }
 
     return (
+        <React.Fragment>
             <div className="mainPlay">
                 <div className="equationDiv">
                     <h2 className="equation">
@@ -35,7 +37,7 @@ const Input = ({gameProps}) => {
                                 autoFocus
                                 onBlur={() => inputRef.current.focus()}
                                 className="invisibleInput" 
-                                onChange={(e) => handleChange(e)} 
+                                onChange={handleChange} 
                                 type="number"
                                 id="value"
                                 value={inputState.value}
@@ -44,6 +46,8 @@ const Input = ({gameProps}) => {
                     </div>
                 </div>
             </div>
+            <Timer initialSeconds={5} handleSubmit={handleSubmit} timerState={_.timerState} setTimerState={_.setTimerState}/>
+        </React.Fragment>
     )
 }
 
