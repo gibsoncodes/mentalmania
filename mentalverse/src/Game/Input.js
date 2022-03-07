@@ -12,9 +12,10 @@ const Input = ({gameProps}) => {
     }
 
     function handleSubmit(e) {
-        if (e) e.preventDefault();  
-        console.log("hit")
-        _.setTimerState({..._.timerState, timerAction: "restart"})
+        if (e) {
+            e.preventDefault();  
+        }
+        _.setTimerState({..._.timerState, timerAction: "paused"})
         _.validateAnswer(inputState.value);
         setInputState({value: ""}); 
         _.displayNewProblem();

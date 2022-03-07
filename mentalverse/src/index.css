@@ -31,7 +31,7 @@ code {
     grid-column-start: 2;
     border: solid black 8px;
     display: grid;
-    grid-template-rows: 1fr 7fr;
+    grid-template-rows: 1fr 6fr;
     grid-template-columns: 1fr 19fr 1fr;
 }
 
@@ -170,7 +170,6 @@ code {
 
 .game {
     grid-column: 2;
-
 }
 
 .startBtn {
@@ -257,13 +256,14 @@ button:hover {
 .timer {
     grid-row: 1/3;
     grid-column: 3;
+    height: 0%;
     /* align-self: center; */
     justify-self: center;
     /* background-color: rgb(164, 164, 164); */
     width: 2px;
     border-right: solid black 2px;
     border-left: solid black 2px;
-    /* animation: slide 5s infinite; */
+    animation-iteration-count: 1;
 }
 
 .timerAnimation {
@@ -278,11 +278,28 @@ button:hover {
     animation-play-state: initial;
 }
 
+.fadeAnim {
+    animation: fadeout 1.5s linear 1;
+}
+
 @keyframes slide{
-    from {
+    0% {
         height: 100%;
     }
-    to {
+    80% {
         height: 0%;
+    } 
+    100% {
+        height: 0%;
+    } 
+}
+
+@keyframes fadeout{
+    0% {
+        opacity: 1;
+    }
+
+    100%{
+        opacity: 0;
     }
 }
