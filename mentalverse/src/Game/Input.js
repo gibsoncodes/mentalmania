@@ -9,7 +9,24 @@ const Input = ({gameProps}) => {
     const handleChange = (e) => {
         e.preventDefault()
         if (_.gameState.playState !== "paused") {
-            setInputState({ ...inputState, [e.target.id]: e.target.value });
+            if (e.target.value.length < inputState.value.length) {
+                setInputState({ ...inputState, value: inputState.value.slice(0, -1)});
+            } else {
+                let pressed = e.target.value[e.target.value.length - 1]
+                if (pressed === "-") {
+                    if (inputState.value.length === 0) {
+                        setInputState({ ...inputState, value: inputState.value + pressed});
+                    }
+                } else if (pressed === ".") {
+                    if (inputState.value.indexOf(".") === -1) {
+                        setInputState({ ...inputState, value: inputState.value + pressed});
+                    }
+                } else {
+                    if ((pressed >= 0 && pressed <= 9)){
+                        setInputState({ ...inputState, value: inputState.value + pressed});
+                    }
+                }
+            }
         }
     }
 
@@ -40,10 +57,10 @@ const Input = ({gameProps}) => {
                             <input 
                                 ref={inputRef}
                                 autoFocus
+                                autoComplete="off"
                                 onBlur={() => inputRef.current.focus()}
                                 className="invisibleInput" 
-                                onChange={handleChange} 
-                                type="number"
+                                onChange={(e) => handleChange(e)}
                                 id="value"
                                 value={inputState.value}
                             />
