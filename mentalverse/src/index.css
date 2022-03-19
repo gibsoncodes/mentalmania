@@ -37,15 +37,15 @@ code {
 
 .title {
     display: inline;
-    float: left;
-    padding-left: 1px;
     font-size: 27px;
     font-weight: 900;
 }
 
 .titleDiv {
+    justify-self: left;
     grid-row-start: 1;
     grid-column: 2;
+    margin-top: 15px;
 }
 
 .border1 {
@@ -151,21 +151,22 @@ code {
 }
 
 .categoryText {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .categoryBtn {
     background-color: white;
-    padding: 30px 13px;
+    padding: 27px 13px;
     width: 180px;
     font-size: 17px;
     border: solid black 2px;
     margin: 0 5px;
     font-weight: 600;
+    margin-top: 12px;
 }
 
 .categoryDiv {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .game {
@@ -174,11 +175,14 @@ code {
 
 .startBtn {
     position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
     padding: 18px 30px;
     margin-top: 50px;
     font-size: 30px;
     background-color: white;
     border: solid black 2px;
+    display: block;
 }
 
 .startBtn::before {
@@ -263,11 +267,12 @@ button:hover {
     width: 2px;
     border-right: solid black 2px;
     border-left: solid black 2px;
-    animation-iteration-count: 1;
 }
 
 .timerAnimation {
-    animation: slide 5s infinite;
+    animation-name: slide;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
 }
 
 .timerPaused {
@@ -286,6 +291,15 @@ button:hover {
     0% {
         height: 100%;
     }
+    20% {
+        height: 70%;
+    }
+    40% {
+        height: 40%;
+    }
+    60% {
+        height: 20%;
+    }
     80% {
         height: 0%;
     } 
@@ -302,4 +316,39 @@ button:hover {
     100%{
         opacity: 0;
     }
+}
+
+.slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: white;
+    border: solid black 2px;
+    height: 5px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 6px; 
+    height: 14px; 
+    background: black;
+    cursor: pointer; 
+}
+
+.slider::-moz-range-thumb {
+    width: 6px; 
+    height: 14px;
+    background: black; 
+    cursor: pointer; 
+}
+
+.sliderDiv {
+    display: inline-block;
+
+    margin-top: 45px;
+}
+
+.difficultyDiv {
+    display: inline-block;
+    margin-left: 50px;
 }

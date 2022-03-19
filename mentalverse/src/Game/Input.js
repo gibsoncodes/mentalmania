@@ -8,18 +8,22 @@ const Input = ({gameProps}) => {
 
     const handleChange = (e) => {
         e.preventDefault()
-        setInputState({ ...inputState, [e.target.id]: e.target.value });
+        if (_.gameState.playState !== "paused") {
+            setInputState({ ...inputState, [e.target.id]: e.target.value });
+        }
     }
 
     function handleSubmit(e) {
         if (e) {
             e.preventDefault();  
         }
-        _.setTimerState({..._.timerState, timerAction: "paused"})
-        _.validateAnswer(inputState.value);
-        setInputState({value: ""}); 
-        _.displayNewProblem();
+        if (_.gameState.playState !== "paused") {
+            _.setTimerState({..._.timerState, timerAction: "paused"})
+            _.validateAnswer(inputState.value);
+            setInputState({value: ""}); 
+        }
     }
+
 
     return (
         <React.Fragment>

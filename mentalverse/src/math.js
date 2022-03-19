@@ -19,7 +19,6 @@ function toFraction(x, tolerance) {
 
 class NewGame {
     constructor() {
-        console.log("momom")
         this.score = {
             right: 0,
             wrong: 0,
@@ -29,23 +28,24 @@ class NewGame {
         this.gameCategories = [];
     }
 
-    addCategories(categories) {
+    addCategories(categories, difficulty) {
+        difficulty = parseInt(difficulty);
         categories.forEach(category => {
             switch (category) {
                 case "ADDITION":
-                    this.gameCategories.push(new AdditionAndSubtraction(category.difficulty, 'addition'));
+                    this.gameCategories.push(new AdditionAndSubtraction(difficulty, 'addition'));
                     break;
                 case "SUBTRACTION":
-                    this.gameCategories.push(new AdditionAndSubtraction(category.difficulty, 'subtraction'));
+                    this.gameCategories.push(new AdditionAndSubtraction(difficulty, 'subtraction'));
                     break;
                 case "MULTIPLICATION":
-                    this.gameCategories.push(new Multiplication(category.difficulty));
+                    this.gameCategories.push(new Multiplication(difficulty));
                     break;
                 case "DIVISION":
-                    this.gameCategories.push(new Division(category.difficulty));
+                    this.gameCategories.push(new Division(difficulty));
                     break;
                 case "ALGEBRA":
-                    this.gameCategories.push(new Algebra(category.difficulty));
+                    this.gameCategories.push(new Algebra(difficulty));
                     break;
                 default:
                     console.log("no category added");
@@ -92,7 +92,6 @@ class NewGame {
     }
 
     getPlaySet() {
-        console.log(this.gameProblemSet)
         return this.gameProblemSet;
     }
 }
@@ -104,6 +103,8 @@ class Multiplication {
             equation: "",
         }
         this.difficulty = difficulty;
+        this.maxOperator = 0;
+        this.minOperator = 0;
         this.setValues()
     }
 
@@ -119,17 +120,17 @@ class Multiplication {
                 break;
             case 4: 
                 this.maxOperator = 100;
-                this.minMultiplier = 10;
+                this.minOperator = 15;
                 break;
             default: 
                 this.maxOperator = 12;
-                this.minOperator = 2;       
+                this.minOperator = 0;       
         }
     }
 
     generateProblem() {
-        let x = Math.floor(Math.random() * this.maxOperator - this.minOperator) + this.minOperator; 
-        let y = Math.floor(Math.random() * this.maxOperator - this.minOperator) + this.minOperator;
+        let x = Math.floor(Math.random() * (this.maxOperator - this.minOperator + 1) + this.minOperator); 
+        let y = Math.floor(Math.random() * (this.maxOperator - this.minOperator + 1) + this.minOperator); 
         this.problem.answer = x * y;
         this.problem.equation = `${x} * ${y}`;
     }
@@ -173,8 +174,8 @@ class AdditionAndSubtraction {
     }
 
     generateProblem() {
-        let x = Math.floor(Math.random() * this.maxOperator - this.minOperator) + this.minOperator; 
-        let y = Math.floor(Math.random() * this.maxOperator - this.minOperator) + this.minOperator;
+        let x = Math.floor(Math.random() * (this.maxOperator - this.minOperator + 1) + this.minOperator); 
+        let y = Math.floor(Math.random() * (this.maxOperator - this.minOperator + 1) + this.minOperator); 
         this.problem.answer = this.ternary ? x + y : x - y;
         this.problem.equation = `${x} ${this.ternary ? '+' : '-'} ${y}`;
     }
@@ -288,8 +289,6 @@ class Algebra {
             let coRand = Math.floor(Math.random() * max) + 1;
             let opRand = Math.floor(Math.random() * 2);
 
-            // console.log(coRand)
-
             coefficient = opRand === 1 ? coefficient * coRand : coefficient / coRand;
 
 
@@ -298,7 +297,6 @@ class Algebra {
                 while (acquireProblem < 1) {
                     let rand = Math.floor(Math.random() * max) + 1;
                     let temp = countDecimals((rand / toFraction(coefficient).numerator))
-                    // console.log(coefficient, rand / coefficient)
                     if (temp <= diff - 1) {
                         equalsTo = rand;
                         acquireProblem++;
@@ -308,8 +306,6 @@ class Algebra {
                 let rand = Math.floor(Math.random() * max) + 1;
                 equalsTo = rand;
             }
-
-            // console.log(coefficient)
 
             coefficient = toFraction(coefficient);
 

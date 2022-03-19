@@ -1,5 +1,5 @@
 import React from 'react'
-import Game from '../Game/Game'
+import Categories from '../Game/Categories'
 import Input from '../Game/Input'
 
 
@@ -34,7 +34,6 @@ const triDivs = [
 
 const MagicBorder = ({ titleState, borderState, gameProps}) => {
     const data = [];
-    console.log(borderState)
     for (let i = 0; i < 4; i++) {
         let borderStyle = (i + 1) % 2 !== 0 ? "innerBorderVertical" : "innerBorderHorizontal";
         let bname = "border" + (i+1);
@@ -47,7 +46,7 @@ const MagicBorder = ({ titleState, borderState, gameProps}) => {
                 backgroundColor: borderState[i+1][j],
             }
             inners.push(
-                <div key={j * i + j} className={borderStyle} style={divStyle}></div>
+                <div key={(j+1) * (i + 1) + "inner"} className={borderStyle} style={divStyle}></div>
             )
             topInners.push(
                 <div key={j * i + j + "triTop"} className={borderStyle} style={divStyle}></div>
@@ -57,9 +56,9 @@ const MagicBorder = ({ titleState, borderState, gameProps}) => {
             )
         }
         let outer = (
-            <React.Fragment>
+            <React.Fragment key={i + "outer"}>
                 <AsComponent key={`${i}ttri`} divName={triDivs[i][0]} data={topInners}/>
-                <div key={i} className={bname}>
+                <div className={bname}>
                     {inners}
                 </div>
                 <AsComponent key={`${i}btri`} divName={triDivs[i][1]} data={bottomInners}/>
@@ -68,6 +67,7 @@ const MagicBorder = ({ titleState, borderState, gameProps}) => {
         data.push(outer);  
     }
     let display = gameProps.gameState.playState;
+    let _ = gameProps
 
 
     return (
@@ -75,10 +75,8 @@ const MagicBorder = ({ titleState, borderState, gameProps}) => {
             {data}
             <div className="mid" id="maniaMid">
                 <TitleDiv colors={titleState}/>    
-                {display === "offline" ? <Game gameProps={gameProps} /> : null }
+                {display === "offline" ? <Categories startGame={_.startGame} handleSubmit={_.handleSubmit} timerState={_.timerState} setTimerState={_.setTimerState}/>: null }
                 {display === "default" || display === "paused" ? <Input gameProps={gameProps} /> : null }
-                <button onClick={(e) => gameProps.toggleGame(e)}>Pause Game</button>
-
             </div>
         </div>
     )

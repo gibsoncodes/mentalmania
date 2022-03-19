@@ -1,19 +1,18 @@
 import React from 'react'
-import { useState, useEffect, useReducer } from 'react';
+import { useState, useEffect} from 'react';
 
 const Timer = (props) => {
-    const {initialSeconds = 5} = props.initialSeconds;
+    const initialSeconds = props.timerState.timeValue;
     const [seconds, setSeconds ] =  useState(initialSeconds);
 
-    console.log("refresh")
+    const timeString = "slide " + (initialSeconds * 1.2) + "s linear";
     let timerStyle;
     if (props.timerState.timerAction === "default") {
-        console.log("mnm")
-        timerStyle = { animation: "slide 6s", height: "100%"}
+        timerStyle = { animation: timeString}
     } else if (props.timerState.timerAction === "restart") {
         timerStyle = { animation: "none"}
     } else if (props.timerState.timerAction === "paused") {
-        timerStyle = { animation: "slide 6s", animationPlayState: "paused"}
+        timerStyle = { animation: timeString, animationPlayState: "paused"}
     }
 
     useEffect(()=>{

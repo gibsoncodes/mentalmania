@@ -5,6 +5,8 @@ import React, {useState} from 'react'
 const Categories = ({startGame, handleSubmit, timerState, setTimerState}) => {
 
     const categories = ["ADDITION", "SUBTRACTION", "MULTIPLICATION", "DIVISION", "ALGEBRA"];
+    const [sliderState, setSliderState] = useState(8);
+    const [difficultyState, setDifficultyState] = useState(1);
 
     const initialCategoryState = {};
     categories.forEach(cat => initialCategoryState[cat] = false)
@@ -20,19 +22,43 @@ const Categories = ({startGame, handleSubmit, timerState, setTimerState}) => {
     }
 
     const submitCategories = () => {
-        let payload = Object.keys(categoryState).filter(key => categoryState[key] === true);
+        let cats = Object.keys(categoryState).filter(key => categoryState[key] === true);
+        let payload = {cats: cats, difficulty: difficultyState, timeValue: sliderState}
         startGame(payload);
         setCategoryState(initialCategoryState);
     }
 
     return (
-        <div>
+        <div className="game">
             <div className="categoryDiv">
                 {categories.map(cat => {
-                    return <button className="categoryBtn" key={cat} onClick={() => setCategory(cat)}><p  style={categoryState[cat] ? styleUnderline : null}className="btnText">{cat}</p></button>;
+                    return (
+                        <button className="categoryBtn" key={cat} onClick={() => setCategory(cat)}><p  style={categoryState[cat] ? styleUnderline : null} >{cat}</p></button>
+                    )
                 })}
             </div>
-
+            <div className="sliderDiv" >
+                <input
+                    type="range"
+                    value={sliderState}
+                    onChange={(e) => setSliderState(e.target.value)}
+                    className="slider"
+                    min="2"
+                    max="14"
+                />
+                <h4 className="sliderValue">Timer Duration: {sliderState}s</h4>
+            </div>
+            <div className="difficultyDiv">
+                <input
+                    type="range"
+                    value={difficultyState}
+                    onChange={(e) => setDifficultyState(e.target.value)}
+                    className="slider"
+                    min="1"
+                    max="4"
+                />
+                <h4 className="sliderValue">Difficulty: {difficultyState}</h4>
+            </div>
             <button className="startBtn" onClick={submitCategories}>START</button>
         </div>
     )
