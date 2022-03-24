@@ -52,10 +52,16 @@ class NewGame {
             }
         })
     }
-
     generateProblem() {
         let rand = Math.floor(Math.random() * this.gameCategories.length);
-        this.currentProblem = this.gameCategories[rand].serveProblem();
+        let newProblem = this.gameCategories[rand].serveProblem();
+        for (let i = 0; i < 20; i++) {
+            newProblem = this.gameCategories[rand].serveProblem();
+            if (newProblem.equation !== this.currentProblem.equation) {
+                break;
+            }
+        }
+        this.currentProblem = newProblem;
     }
 
     serveProblem() {
@@ -209,7 +215,7 @@ class Division {
                 this.compileNumberSet(2, 200, 3)
                 break;
             default: 
-                this.compileNumberSet(2, 50, 1)
+                this.compileNumberSet(2, 20, 1)
  
         }
     }
@@ -257,16 +263,16 @@ class Algebra {
     setValues() {
         switch (this.difficulty) {
             case 2: 
-                this.compileNumberSet(2, 50, 1)
+                this.compileNumberSet(2, 20, 2)
                 break;
             case 3: 
-                this.compileNumberSet(2, 100, 2)
+                this.compileNumberSet(2, 80, 2)
                 break;
             case 4: 
                 this.compileNumberSet(2, 200, 3)
                 break;
             default: 
-                this.compileNumberSet(2, 20, 1)
+                this.compileNumberSet(2, 12, 1)
  
         }
     }
@@ -289,50 +295,67 @@ class Algebra {
             let coRand = Math.floor(Math.random() * max) + 1;
             let opRand = Math.floor(Math.random() * 2);
 
-            coefficient = opRand === 1 ? coefficient * coRand : coefficient / coRand;
+            coefficient = toFraction(coefficient);
+            if (opRand === 1) {
+                coefficient.denominator = Math.floor(Math.random() * (max)) + 2;
+                coefficient.numerator = Math.floor(Math.random() * (max)) + 1;
+            } else {
+                coefficient.numerator *= coRand;
+            }
 
 
             let acquireProblem = 0;
             if (coefficient > 1) {
                 while (acquireProblem < 1) {
                     let rand = Math.floor(Math.random() * max) + 1;
-                    let temp = countDecimals((rand / toFraction(coefficient).numerator))
+                    let temp = countDecimals((rand / coefficient.numerator))
                     if (temp <= diff - 1) {
                         equalsTo = rand;
                         acquireProblem++;
                     }
                 }
             } else {
-                let rand = Math.floor(Math.random() * max) + 1;
-                equalsTo = rand;
+                while (acquireProblem < 1) {
+                    let rand = Math.floor(Math.random() * max) + 1;
+                    let temp = countDecimals(((rand * coefficient.denominator) / coefficient.numerator))
+                    if (temp <= diff - 1) {
+                        equalsTo = rand;
+                        acquireProblem++;
+                    }
+                }
             }
 
-            coefficient = toFraction(coefficient);
 
 
-            let splitRand = Math.floor(Math.random() * equalsTo - 1) + 1;
+            let splitRand = Math.floor(Math.random() * (equalsTo - 1)) + 1;
             opRand = Math.floor(Math.random() * 2);
 
             if (opRand === 1) {
                 leftSide = splitRand;
                 equalsTo -= splitRand
-                if (coefficient.numerator > coefficient.denominator) {
+                if (coefficient.numerator === coefficient.denominator) {
+                    newProblem.equation = `x - ${leftSide} = ${equalsTo}`;
+                    newProblem.answer = (equalsTo + leftSide);
+                } else if (coefficient.denominator === 1) {
                     newProblem.equation = `${coefficient.numerator}x - ${leftSide} = ${equalsTo}`;
                     newProblem.answer = (equalsTo + leftSide) / coefficient.numerator;
                 } else {
                     newProblem.equation = `${coefficient.numerator}/${coefficient.denominator}x - ${leftSide} = ${equalsTo}`;
-                    newProblem.answer = (equalsTo + leftSide) * coefficient.denominator;
+                    newProblem.answer = ((equalsTo + leftSide) * coefficient.denominator) / coefficient.numerator;
                 }
 
             } else {
                 leftSide = splitRand;
                 equalsTo += splitRand
-                if (coefficient.numerator > coefficient.denominator) {
+                if (coefficient.numerator === coefficient.denominator) {
+                    newProblem.equation = `x + ${leftSide} = ${equalsTo}`;
+                    newProblem.answer = (equalsTo - leftSide);
+                } else if (coefficient.denominator === 1) {
                     newProblem.equation = `${coefficient.numerator}x + ${leftSide} = ${equalsTo}`;
                     newProblem.answer = (equalsTo - leftSide) / coefficient.numerator;
                 } else {
                     newProblem.equation = `${coefficient.numerator}/${coefficient.denominator}x + ${leftSide} = ${equalsTo}`;
-                    newProblem.answer = (equalsTo - leftSide) * coefficient.denominator;
+                    newProblem.answer = ((equalsTo - leftSide) * coefficient.denominator) / coefficient.numerator;
                 }
             }
 
@@ -354,10 +377,5 @@ class Algebra {
         return this.problem;
     }
 }
-
-// let test = new Algebra(0);
-// test.generateProblem()
-// console.log(test.problemSet)
-// console.log(toFraction((1/13)));
 
 export default NewGame;

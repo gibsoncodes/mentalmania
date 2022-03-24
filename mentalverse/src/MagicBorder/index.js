@@ -1,26 +1,13 @@
 import React from 'react'
 import Categories from '../Game/Categories'
 import Input from '../Game/Input'
+import TitleDiv from '../Game/TitleDiv'
 
 
 const AsComponent = ({divName, data}) => {
     return (
         <div className={divName}>
             {data}
-        </div>
-    )
-}
-
-const TitleDiv = ({colors}) => {
-    const titleString = ["M", "E", "N", "T", "A", "L", "M", "A", "N", "I", "A"];
-    return (
-        <div className="titleDiv" id="maniaTitle">
-            {titleString.map((char, index) => {
-                let style = {
-                    color: colors[index],
-                }
-                return <h2 key={char + index} className="title" style={style}>{char}</h2>
-            })}
         </div>
     )
 }
@@ -74,7 +61,7 @@ const MagicBorder = ({ titleState, borderState, gameProps}) => {
         <div className="magicBorder" id="maniaBorder">  
             {data}
             <div className="mid" id="maniaMid">
-                <TitleDiv colors={titleState}/>    
+                <TitleDiv colors={titleState} gameWon={false}/>    
                 {display === "offline" ? <Categories startGame={_.startGame} handleSubmit={_.handleSubmit} timerState={_.timerState} setTimerState={_.setTimerState}/>: null }
                 {display === "default" || display === "paused" ? <Input gameProps={gameProps} /> : null }
             </div>

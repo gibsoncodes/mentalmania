@@ -41,7 +41,6 @@ const Input = ({gameProps}) => {
         }
     }
 
-
     return (
         <React.Fragment>
             <div className="mainPlay">

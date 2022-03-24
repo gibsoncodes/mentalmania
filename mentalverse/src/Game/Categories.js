@@ -14,6 +14,9 @@ const Categories = ({startGame, handleSubmit, timerState, setTimerState}) => {
     const styleUnderline = {
         borderBottom: "solid black 2px",
     }
+    const styleNone = {
+        borderBottom: "solid white 2px",
+    }
     
     const [categoryState, setCategoryState] = useState(initialCategoryState);
 
@@ -33,7 +36,7 @@ const Categories = ({startGame, handleSubmit, timerState, setTimerState}) => {
             <div className="categoryDiv">
                 {categories.map(cat => {
                     return (
-                        <button className="categoryBtn" key={cat} onClick={() => setCategory(cat)}><p  style={categoryState[cat] ? styleUnderline : null} >{cat}</p></button>
+                        <button className="categoryBtn" key={cat} onClick={() => setCategory(cat)}><p  style={categoryState[cat] ? styleUnderline : styleNone} >{cat}</p></button>
                     )
                 })}
             </div>

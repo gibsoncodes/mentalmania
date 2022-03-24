@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import NewGame from './math'
 import MagicBorder from './MagicBorder';
+import YouAreMathMonster from './MagicBorder/YouAreMathMonster';
 import Timer from './Timer';
 
 
@@ -26,15 +27,26 @@ function App() {
     }
     const [game, setGame] = useState(() => new NewGame());
     const [gameState, setGameState] = useState({playState: "offline"})
-    const [score, setScore] = useState({right: 1});
     const [problem, setProblem] = useState(game.currentProblem);
     const [timerState, setTimerState] = useState({timeValue: 8, timerAction: "offline"});
-    const [results, setResults] = useState(null);
     const [borderState, setBorderState] = useState(initialBorderState);
     const [titleState, setTitleState] = useState([...blackArray]);
     const [curr, setCurr] = useState({side: 1, depth: 0, plat: 0, run: 0});
+    const [micros, setMicros] = useState(() => new Array(1600).fill("#FFF"))
 
-    function maniaAnimation(color) {
+    function winAnimation() {
+        micros.forEach((micro, index) => {
+            setTimeout(() => {
+                setMicros(prevMicros => {
+                    let newMicros = [...prevMicros];
+                    newMicros[index] = "#000";
+                    return [...newMicros];
+                })
+            }, index * (timerState.timeValue * 10))
+        })                
+    }
+
+    function maniaAnimation(color, flag) {
         setBorderState(prevState => {
             return {...initialBorderState};
         });
@@ -54,20 +66,27 @@ function App() {
                                 return {...newState};
                             });
                             if (i === 0 && j === 4 && all === curr.plat) {
-                                setTimeout(() => {
-                                    let newTitle = titleState;
-                                    newTitle[curr.plat] = color;
-                                    setTitleState([...newTitle])
-                                    setCurr({...curr, side: 1, depth: 0, plat: curr.plat + 1, run: 0});
-                                    for (let j = 1; j < 5; j++) {
-                                        setBorderState((prevState) => {
-                                            const newState = Object.assign({}, prevState);
-                                            newState[j] = [...whiteArray];
-                                            return {...newState};
-                                        })
-                                    }
-                                    displayNewProblem();
-                                }, 100)
+                                if (flag) {
+                                    setGameState(prevState => {
+                                        return {...prevState, playState: "won"}
+                                    })
+                                    winAnimation()
+                                } else {
+                                    setTimeout(() => {
+                                        let newTitle = titleState;
+                                        newTitle[curr.plat] = color;
+                                        setTitleState([...newTitle])
+                                        setCurr({...curr, side: 1, depth: 0, plat: curr.plat + 1, run: 0});
+                                        for (let j = 1; j < 5; j++) {
+                                            setBorderState((prevState) => {
+                                                const newState = Object.assign({}, prevState);
+                                                newState[j] = [...whiteArray];
+                                                return {...newState};
+                                            })
+                                        }
+                                        displayNewProblem();
+                                    }, 100)
+                                }
                             }
                         }, sum * 150 + (all * 150))
                     }
@@ -86,7 +105,11 @@ function App() {
             setGameState(prevState => {
                 return {...prevState, playState: "mania"}
             });
-            maniaAnimation(randomColor);
+            if (curr.plat === 11) {
+                maniaAnimation("#000", true)
+            } else {
+                maniaAnimation(randomColor, false);
+            }
         } else {
             if (curr.side === 1 || curr.side === 4) {
                 newBorderState[curr.side][6 - curr.depth] = randomColor;
@@ -115,22 +138,6 @@ function App() {
         setTimerState({...timerState, timerAction: "restart", timeValue: payload.timeValue})
     }
 
-    const toggleGame = (e) => {
-        e.preventDefault();
-        let newState = gameState.playState === "paused" ? "default" : "paused";
-        setGameState({...gameState, playState: newState})
-        setTimerState({...timerState, timerAction: newState})
-
-    }
-
-    const endGame = (e) => {
-        e.preventDefault();
-        setGameState({...gameState, playState: "ended"})
-        setTimerState({...timerState, timerAction: "offline"})
-        validateAnswer();
-        setResults(game.getPlaySet());
-    }
-
     const displayNewProblem = () => {
         setTimeout(() => {
             setGameState(prevState => {
@@ -149,26 +156,26 @@ function App() {
             return {...prevState, playState: "paused"}
         });
         let didSolve = game.handleUserInput(value);
-        let newScore = score;
-
         if (didSolve) {
-            newScore.right += 1;
             addBorderElem();
         } else {
-            newScore.wrong += 1;
             setTitleState([...blackArray])
             setBorderState(initialBorderState);
             setCurr({...curr, side: 1, depth: 0, plat: 0, run: 0})
             displayNewProblem();
         }
-        setScore(newScore);
     }
 
-    const gameProps = {displayNewProblem: displayNewProblem, validateAnswer: validateAnswer, setGameState: setGameState, gameState: gameState, game: game, problem: problem, startGame: startGame, timerState: timerState, setTimerState: setTimerState, results: results, score: score, toggleGame: toggleGame, endGame: endGame}
+    const gameProps = {displayNewProblem: displayNewProblem, validateAnswer: validateAnswer, setGameState: setGameState, gameState: gameState, game: game, problem: problem, startGame: startGame, timerState: timerState, setTimerState: setTimerState}
+
+    const main = gameState.playState !== "won" ? 
+        (<MagicBorder titleState={titleState} borderState={borderState} gameProps={gameProps}/>)
+        :
+        (<YouAreMathMonster titleState={titleState} micros={micros}/>);
 
     return (
       <div className="App">
-        <MagicBorder titleState={titleState} borderState={borderState} score={score} gameProps={gameProps}/>
+        {main}
       </div>
     );
 }

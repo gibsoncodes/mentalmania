@@ -179,6 +179,7 @@ code {
     transform: translate(-50%, 0);
     padding: 18px 30px;
     margin-top: 50px;
+    margin-bottom: 10px;
     font-size: 30px;
     background-color: white;
     border: solid black 2px;
@@ -351,4 +352,31 @@ button:hover {
 .difficultyDiv {
     display: inline-block;
     margin-left: 50px;
+}
+.titleDivWon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.titleWon {
+    display: inline;
+    font-weight: 1200;
+    font-size: 4vw;
+    color: black;
+}
+.victoryDiv {
+    position: absolute;
+    display: grid;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: repeat(40, 1fr);
+    grid-template-rows: repeat(40, 1fr);
+}
+.victoryGridItem {
+    width: 100%;
+    height: 100%;
+    background-color: white;
 }
