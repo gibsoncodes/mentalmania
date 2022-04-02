@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/mentalmania/static/css/main.a87f5068.css",
-    "main.js": "/mentalmania/static/js/main.fefb1b91.js",
+    "main.css": "/mentalmania/static/css/main.55817f37.css",
+    "main.js": "/mentalmania/static/js/main.20c4c0eb.js",
     "static/js/787.35ad2e72.chunk.js": "/mentalmania/static/js/787.35ad2e72.chunk.js",
     "index.html": "/mentalmania/index.html",
-    "main.a87f5068.css.map": "/mentalmania/static/css/main.a87f5068.css.map",
-    "main.fefb1b91.js.map": "/mentalmania/static/js/main.fefb1b91.js.map",
+    "main.55817f37.css.map": "/mentalmania/static/css/main.55817f37.css.map",
+    "main.20c4c0eb.js.map": "/mentalmania/static/js/main.20c4c0eb.js.map",
     "787.35ad2e72.chunk.js.map": "/mentalmania/static/js/787.35ad2e72.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a87f5068.css",
-    "static/js/main.fefb1b91.js"
+    "static/css/main.55817f37.css",
+    "static/js/main.20c4c0eb.js"
   ]
 }
