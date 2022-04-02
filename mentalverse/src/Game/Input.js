@@ -57,6 +57,7 @@ const Input = ({gameProps}) => {
                                 ref={inputRef}
                                 autoFocus
                                 autoComplete="off"
+                                onClick={() => inputRef.current.focus()}
                                 onBlur={() => inputRef.current.focus()}
                                 className="invisibleInput" 
                                 onChange={(e) => handleChange(e)}
